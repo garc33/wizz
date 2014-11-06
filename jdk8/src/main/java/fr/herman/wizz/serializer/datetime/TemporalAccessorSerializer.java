@@ -11,14 +11,14 @@ import fr.herman.wizz.exception.SerializerException;
 import fr.herman.wizz.io.SerializerReader;
 import fr.herman.wizz.io.SerializerWriter;
 
-public abstract class TemporalAccessorConverter<T extends TemporalAccessor> implements Serializer<T> {
+public abstract class TemporalAccessorSerializer<T extends TemporalAccessor> implements Serializer<T> {
 
     private final String pattern;
 
     private final TemporalQuery<T> query;
     private final DateTimeFormatter formatter;
 
-    public TemporalAccessorConverter(String pattern, TemporalQuery<T> query) {
+    public TemporalAccessorSerializer(String pattern, TemporalQuery<T> query) {
         this.pattern = pattern;
         this.query = query;
         this.formatter = DateTimeFormatter.ofPattern(pattern);

@@ -4,13 +4,13 @@ import static java.util.Optional.ofNullable;
 
 import java.time.LocalDate;
 
-public class LocalDateConverter extends TemporalAccessorConverter<LocalDate> {
+public class LocalDateSerializer extends TemporalAccessorSerializer<LocalDate> {
 
-    public LocalDateConverter() {
+    public LocalDateSerializer() {
         this(null);
     }
 
-    public LocalDateConverter(String pattern) {
+    public LocalDateSerializer(String pattern) {
         super(ofNullable(pattern).orElse("yyyyMMdd"), LocalDate::from);
     }
 

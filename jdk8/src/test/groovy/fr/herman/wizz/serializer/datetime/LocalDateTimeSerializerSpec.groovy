@@ -1,18 +1,25 @@
 package fr.herman.wizz.serializer.datetime
 
 import static java.time.LocalDateTime.of
-
 import java.time.LocalDateTime
-
 import spock.lang.Specification
 import spock.lang.Unroll
 import fr.herman.wizz.exception.SerializerException
+import fr.herman.wizz.io.SerializerReader
+import fr.herman.wizz.io.SerializerWriter
 
-class LocalDateTimeConverterSpec extends Specification{
+class LocalDateTimeSerializerSpec extends Specification{
+
+    SerializerReader reader = Mock(SerializerReader)
+    SerializerWriter writer = Mock(SerializerWriter)
+
     @Unroll
-    def "convert Object #input with format #format to String #output"(){
+    def "serialize Object #input with format #format to String #output"(){
+        0* writer._
+        1* writer.writeString(output)
         expect:
-        new LocalDateTimeConverter(format).to(input) == output
+        new LocalDateTimeSerializer(format).serialize(writer,input)
+
 
         where:
         input           |format                         ||output
@@ -24,9 +31,11 @@ class LocalDateTimeConverterSpec extends Specification{
     }
 
     @Unroll
-    def "convert String #input from format #format to Object #output"(){
+    def "deserialize String #input from format #format to Object #output"(){
+        0* reader._
+        1* reader.readString() >> input
         expect:
-        new LocalDateTimeConverter(format).from(input) == output
+        new LocalDateTimeSerializer(format).deserialize(reader) == output
 
         where:
         input                   |format                ||output
@@ -39,23 +48,24 @@ class LocalDateTimeConverterSpec extends Specification{
 
     def "default format is yyyyMMdd"(){
         when:
-        def converter = new LocalDateTimeConverter()
+        def converter = new LocalDateTimeSerializer()
         then:
         converter.format()=='yyyyMMdd HHmmss'
     }
 
     def "throw ConversionException when parsing fail"(){
         given:
-        def converter = new LocalDateTimeConverter()
+        def converter = new LocalDateTimeSerializer()
+        reader.readString() >> 'not a datetime'
         when:
-        converter.from('not a datetime')
+        converter.deserialize(reader)
         then:
         thrown SerializerException
     }
 
     def "handle LocalDate class"(){
         when:
-        def converter = new LocalDateTimeConverter()
+        def converter = new LocalDateTimeSerializer()
         then:
         converter.handleClass()==LocalDateTime
     }

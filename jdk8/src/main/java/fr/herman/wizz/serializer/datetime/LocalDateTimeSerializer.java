@@ -3,13 +3,13 @@ package fr.herman.wizz.serializer.datetime;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-public class LocalDateTimeConverter extends TemporalAccessorConverter<LocalDateTime> {
+public class LocalDateTimeSerializer extends TemporalAccessorSerializer<LocalDateTime> {
 
-    public LocalDateTimeConverter() {
+    public LocalDateTimeSerializer() {
         this(null);
     }
 
-    public LocalDateTimeConverter(String pattern) {
+    public LocalDateTimeSerializer(String pattern) {
         super(Optional.ofNullable(pattern).orElse("yyyyMMdd HHmmss"), LocalDateTime::from);
     }
 
