@@ -1,0 +1,36 @@
+buildscript {
+	repositories{
+		mavenCentral()
+		maven{ url = 'https://repo.eclipse.org/content/repositories/egit-releases/' }
+		maven{ url = 'https://raw.github.com/garc33/m2p2-repository/mvn-repo/maven/releases/' }
+	}
+	dependencies { classpath "fr.herman.gradle.plugins:gradle-github-plugin:1.0" }
+}
+allprojects{
+
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+	apply plugin: 'maven'
+	apply plugin: 'github'
+	apply plugin: 'groovy'
+
+	version = '1.0-SNAPSHOT'
+
+	repositories { mavenCentral() }
+	
+	sourceCompatibility = 1.7
+	dependencies{
+		testCompile 'org.codehaus.groovy:groovy-all:2.3.6'
+		testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
+		testCompile 'cglib:cglib-nodep:3.1'
+	}
+	
+	
+	github {
+		username = 'garc33'
+		repo = 'm2p2-repository'
+		branch = 'mvn-repo'
+	}
+
+	group 'fr.herman.stringify'
+}

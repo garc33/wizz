@@ -1,0 +1,15 @@
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+**/.classpath
+**/.project
+**/test-output
+**/test-output/**/*
+**/build
+**/build/**/*
+build
+**/.settings
+/.settings
