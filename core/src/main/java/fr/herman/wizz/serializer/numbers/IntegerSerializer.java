@@ -12,10 +12,6 @@ public class IntegerSerializer implements Serializer<Integer> {
         return Integer.class;
     }
 
-    @Override
-    public String format() {
-        return "integer";
-    }
 
     @Override
     public Integer deserialize(SerializerReader reader) throws SerializerException {

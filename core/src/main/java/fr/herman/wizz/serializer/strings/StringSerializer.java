@@ -21,10 +21,4 @@ public class StringSerializer implements Serializer<String> {
     public Class<String> handleClass() {
         return String.class;
     }
-
-    @Override
-    public String format() {
-        return "string";
-    }
-
 }

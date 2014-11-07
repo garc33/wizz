@@ -30,9 +30,4 @@ class TimeStampSerializerSpec extends Specification {
         expect:
         serializer.handleClass() == Date
     }
-
-    def "string format"(){
-        expect:
-        serializer.format() == 'timestamp'
-    }
 }

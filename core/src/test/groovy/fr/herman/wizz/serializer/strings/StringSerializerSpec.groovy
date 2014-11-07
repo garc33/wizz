@@ -31,9 +31,4 @@ class StringSerializerSpec extends Specification {
         expect:
         serializer.handleClass() == String
     }
-
-    def "string format"(){
-        expect:
-        serializer.format() == 'string'
-    }
 }

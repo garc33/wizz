@@ -1,7 +1,6 @@
 package fr.herman.wizz.serializer.numbers;
 
 import java.math.BigInteger;
-
 import fr.herman.wizz.Serializer;
 import fr.herman.wizz.exception.SerializerException;
 import fr.herman.wizz.io.SerializerReader;
@@ -14,11 +13,6 @@ public class BigIntegerStringSerializer implements Serializer<BigInteger> {
         return BigInteger.class;
     }
 
-
-    @Override
-    public String format() {
-        return "integer";
-    }
 
     @Override
     public BigInteger deserialize(SerializerReader reader) throws SerializerException {

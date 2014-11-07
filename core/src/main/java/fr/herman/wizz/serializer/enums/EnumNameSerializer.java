@@ -2,14 +2,15 @@ package fr.herman.wizz.serializer.enums;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import fr.herman.wizz.Serializer;
+import fr.herman.wizz.WithFormat;
 import fr.herman.wizz.exception.SerializerException;
 import fr.herman.wizz.io.SerializerReader;
 import fr.herman.wizz.io.SerializerWriter;
 import fr.herman.wizz.utils.Strings;
 
-public class EnumNameSerializer<E extends Enum<E>> implements Serializer<E> {
+public class EnumNameSerializer<E extends Enum<E>> implements Serializer<E>, WithFormat
+{
 
     private final Class<E> clazz;
     private final String   format;

@@ -10,6 +10,4 @@ public interface Serializer<TYPE> {
     void serialize(SerializerWriter writer, TYPE object) throws SerializerException;
 
     Class<TYPE> handleClass();
-
-    String format();
 }

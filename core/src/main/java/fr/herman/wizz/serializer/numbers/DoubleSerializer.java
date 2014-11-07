@@ -13,11 +13,6 @@ public class DoubleSerializer implements Serializer<Double> {
     }
 
     @Override
-    public String format() {
-        return "double";
-    }
-
-    @Override
     public Double deserialize(SerializerReader reader) throws SerializerException {
         return Double.valueOf(reader.readDouble());
     }

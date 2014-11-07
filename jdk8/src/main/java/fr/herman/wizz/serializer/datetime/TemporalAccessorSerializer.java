@@ -5,13 +5,14 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.TemporalAccessor;
 import java.time.temporal.TemporalQuery;
-
 import fr.herman.wizz.Serializer;
+import fr.herman.wizz.WithFormat;
 import fr.herman.wizz.exception.SerializerException;
 import fr.herman.wizz.io.SerializerReader;
 import fr.herman.wizz.io.SerializerWriter;
 
-public abstract class TemporalAccessorSerializer<T extends TemporalAccessor> implements Serializer<T> {
+public abstract class TemporalAccessorSerializer<T extends TemporalAccessor> implements Serializer<T>, WithFormat
+{
 
     private final String pattern;
 

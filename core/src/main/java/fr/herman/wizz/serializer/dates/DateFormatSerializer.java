@@ -1,16 +1,16 @@
 package fr.herman.wizz.serializer.dates;
 
 import static fr.herman.wizz.utils.Nullables.defaultValue;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import fr.herman.wizz.Serializer;
+import fr.herman.wizz.WithFormat;
 import fr.herman.wizz.exception.SerializerException;
 import fr.herman.wizz.io.SerializerReader;
 import fr.herman.wizz.io.SerializerWriter;
 
-public class DateFormatSerializer implements Serializer<Date> {
+public class DateFormatSerializer implements Serializer<Date>, WithFormat
+{
 
     private final String pattern;
 

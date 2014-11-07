@@ -21,10 +21,4 @@ public class CharacterSerializer implements Serializer<Character> {
     public Class<Character> handleClass() {
         return Character.class;
     }
-
-    @Override
-    public String format() {
-        return "character";
-    }
-
 }

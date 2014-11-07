@@ -13,11 +13,6 @@ public class LongSerializer implements Serializer<Long> {
     }
 
     @Override
-    public String format() {
-        return "long";
-    }
-
-    @Override
     public Long deserialize(SerializerReader reader) throws SerializerException {
         return Long.valueOf(reader.readLong());
     }

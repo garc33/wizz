@@ -7,11 +7,7 @@ import fr.herman.wizz.io.SerializerWriter;
 
 public class BooleanSerializer implements Serializer<Boolean> {
 
-    private final String trueValue, falseValue;
-
     public BooleanSerializer(String trueValue, String falseValue) {
-        this.trueValue = trueValue;
-        this.falseValue = falseValue;
     }
 
     @Override
@@ -28,10 +24,4 @@ public class BooleanSerializer implements Serializer<Boolean> {
     public Class<Boolean> handleClass() {
         return Boolean.class;
     }
-
-    @Override
-    public String format() {
-        return String.format("%s/%s", trueValue, falseValue);
-    }
-
 }

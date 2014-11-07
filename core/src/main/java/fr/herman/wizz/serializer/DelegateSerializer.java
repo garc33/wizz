@@ -27,10 +27,4 @@ public class DelegateSerializer<T> implements Serializer<T> {
     public Class<T> handleClass() {
         return delegate.handleClass();
     }
-
-    @Override
-    public String format() {
-        return delegate.format();
-    }
-
 }

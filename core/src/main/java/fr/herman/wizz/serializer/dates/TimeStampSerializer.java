@@ -26,11 +26,4 @@ public class TimeStampSerializer implements Serializer<Date>
     {
         return Date.class;
     }
-
-    @Override
-    public String format()
-    {
-        return "timestamp";
-    }
-
 }

@@ -1,7 +1,6 @@
 package fr.herman.wizz.serializer.numbers;
 
 import java.math.BigDecimal;
-
 import fr.herman.wizz.Serializer;
 import fr.herman.wizz.exception.SerializerException;
 import fr.herman.wizz.io.SerializerReader;
@@ -12,11 +11,6 @@ public class BigDecimalStringSerializer implements Serializer<BigDecimal> {
     @Override
     public Class<BigDecimal> handleClass() {
         return BigDecimal.class;
-    }
-
-    @Override
-    public String format() {
-        return "decimal";
     }
 
     @Override
