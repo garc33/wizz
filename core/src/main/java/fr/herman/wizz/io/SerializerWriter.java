@@ -19,7 +19,7 @@ public interface SerializerWriter {
 
     void writeChar(char input) throws SerializerException;
 
-    void writeString(CharSequence input) throws SerializerException;
+    void writeString(String input) throws SerializerException;
 
     void writeNull() throws SerializerException;
 
