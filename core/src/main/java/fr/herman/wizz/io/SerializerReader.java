@@ -7,7 +7,7 @@ public interface SerializerReader {
 
     long readLong() throws SerializerException;
 
-    short readSort() throws SerializerException;
+    short readShort() throws SerializerException;
 
     double readDouble() throws SerializerException;
 

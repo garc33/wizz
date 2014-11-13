@@ -1,4 +1,4 @@
-package fr.herman.wizz.output.strings;
+package fr.herman.wizz.io.strings;
 
 
 public class NumberOutput {

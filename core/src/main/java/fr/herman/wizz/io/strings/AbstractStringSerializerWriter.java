@@ -1,9 +1,9 @@
 package fr.herman.wizz.io.strings;
 
-import static fr.herman.wizz.output.strings.BooleanOutput.outputBoolean;
-import static fr.herman.wizz.output.strings.ByteOutput.outputByte;
-import static fr.herman.wizz.output.strings.NumberOutput.outputInt;
-import static fr.herman.wizz.output.strings.NumberOutput.outputLong;
+import static fr.herman.wizz.io.strings.BooleanOutput.outputBoolean;
+import static fr.herman.wizz.io.strings.ByteOutput.outputByte;
+import static fr.herman.wizz.io.strings.NumberOutput.outputInt;
+import static fr.herman.wizz.io.strings.NumberOutput.outputLong;
 import static java.lang.Math.min;
 
 import java.io.IOException;
@@ -11,9 +11,6 @@ import java.io.Writer;
 
 import fr.herman.wizz.exception.SerializerException;
 import fr.herman.wizz.io.SerializerWriter;
-import fr.herman.wizz.output.strings.BooleanOutput;
-import fr.herman.wizz.output.strings.ByteOutput;
-import fr.herman.wizz.output.strings.NumberOutput;
 
 public abstract class AbstractStringSerializerWriter implements SerializerWriter {
 
