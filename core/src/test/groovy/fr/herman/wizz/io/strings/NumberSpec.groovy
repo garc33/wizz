@@ -8,7 +8,7 @@ class NumberSpec extends Specification{
     @Unroll
     def "readwrite int #number"(){
         given:
-        char[] buf = new char[NumberOutput.MIN_BUFFER_SIZE]
+        char[] buf = new char[NumberOutput.INT_MIN_BUFFER_SIZE]
 
         expect:
         int length = NumberOutput.outputInt(number, buf, 0)
@@ -29,7 +29,7 @@ class NumberSpec extends Specification{
     @Unroll
     def "readwrite long #number"(){
         given:
-        char[] buf = new char[NumberOutput.MIN_BUFFER_SIZE]
+        char[] buf = new char[NumberOutput.LONG_MIN_BUFFER_SIZE]
 
         expect:
         int length = NumberOutput.outputLong(number, buf, 0)

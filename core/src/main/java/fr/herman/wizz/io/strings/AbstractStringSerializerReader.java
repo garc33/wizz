@@ -51,13 +51,13 @@ public abstract class AbstractStringSerializerReader implements SerializerReader
 
     @Override
     public int readInt() throws SerializerException {
-        require(NumberOutput.MIN_BUFFER_SIZE);
+        require(NumberOutput.INT_MIN_BUFFER_SIZE);
         return 0;
     }
 
     @Override
     public long readLong() throws SerializerException {
-        require(NumberOutput.MIN_BUFFER_SIZE);
+        require(NumberOutput.LONG_MIN_BUFFER_SIZE);
         return 0;
     }
 

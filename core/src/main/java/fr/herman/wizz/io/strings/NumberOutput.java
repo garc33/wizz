@@ -1,6 +1,5 @@
 package fr.herman.wizz.io.strings;
 
-
 public class NumberOutput {
     private static final char NULL_CHAR = (char) 0;
 
@@ -22,7 +21,13 @@ public class NumberOutput {
 
     private static final char[] DIGITS = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
-    public static final int MIN_BUFFER_SIZE = Math.max(Long.toString(Long.MIN_VALUE).length(), Long.toString(Long.MAX_VALUE).length());
+    public static final int LONG_MIN_BUFFER_SIZE = Math.max(Long.toString(Long.MIN_VALUE).length(), Long.toString(Long.MAX_VALUE).length());
+
+    public static final int INT_MIN_BUFFER_SIZE = Math.max(Integer.toString(Integer.MIN_VALUE).length(), Integer
+            .toString(Integer.MAX_VALUE).length());
+
+    public static final int SHORT_MIN_BUFFER_SIZE = Math.max(Short.toString(Short.MIN_VALUE).length(), Short.toString(Short.MAX_VALUE)
+            .length());
 
     static {
         /*

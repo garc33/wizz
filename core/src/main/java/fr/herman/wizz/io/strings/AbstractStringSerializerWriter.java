@@ -14,11 +14,15 @@ import fr.herman.wizz.io.SerializerWriter;
 
 public abstract class AbstractStringSerializerWriter implements SerializerWriter {
 
-    protected Writer writer;
+    protected final Writer writer;
 
     protected char[] buffer;
 
     protected int cursor;
+
+    public AbstractStringSerializerWriter(Writer writer) {
+        this.writer = writer;
+    }
 
     protected void require(int size) throws SerializerException {
         if (size > buffer.length - cursor) {
@@ -26,9 +30,10 @@ public abstract class AbstractStringSerializerWriter implements SerializerWriter
         }
     }
 
-    protected void flush() throws SerializerException {
+    public void flush() throws SerializerException {
         try {
             writer.write(buffer, 0, cursor);
+            writer.flush();
             cursor = 0;
         } catch (IOException e) {
             throw new SerializerException(e.getLocalizedMessage(), e);
@@ -37,19 +42,19 @@ public abstract class AbstractStringSerializerWriter implements SerializerWriter
 
     @Override
     public void writeInt(int input) throws SerializerException {
-        require(NumberOutput.MIN_BUFFER_SIZE);
+        require(NumberOutput.INT_MIN_BUFFER_SIZE);
         cursor = outputInt(input, buffer, cursor);
     }
 
     @Override
     public void writeLong(long input) throws SerializerException {
-        require(NumberOutput.MIN_BUFFER_SIZE);
+        require(NumberOutput.LONG_MIN_BUFFER_SIZE);
         cursor = outputLong(input, buffer, cursor);
     }
 
     @Override
     public void writeShort(short input) throws SerializerException {
-        require(NumberOutput.MIN_BUFFER_SIZE);
+        require(NumberOutput.SHORT_MIN_BUFFER_SIZE);
         cursor = outputInt(input, buffer, cursor);
     }
 
