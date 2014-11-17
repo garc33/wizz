@@ -26,6 +26,7 @@ class NumberSpec extends Specification{
             Integer.MIN_VALUE
         ]
     }
+
     @Unroll
     def "readwrite long #number"(){
         given:

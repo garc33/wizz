@@ -55,7 +55,7 @@ public abstract class AbstractStringSerializerReader implements SerializerReader
         }
     }
 
-    protected abstract int tokenLength(char[] buffer, int offset, int count, int required);
+    protected abstract int tokenLength(char[] buffer, int offset, int count, int required) throws SerializerException;
 
     @Override
     public int readInt() throws SerializerException {
