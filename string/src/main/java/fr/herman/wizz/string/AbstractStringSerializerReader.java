@@ -61,13 +61,12 @@ public abstract class AbstractStringSerializerReader implements SerializerReader
         }
     }
 
-    protected abstract int tokenLength(char[] buffer, int offset, int count, int required) throws SerializerException;
+    protected abstract int tokenLength(boolean appendable) throws SerializerException;
 
     @Override
     public int readInt() throws SerializerException {
-        System.out.println(cursor);
-        int length = require(NumberOutput.INT_MIN_BUFFER_SIZE);
-        length = tokenLength(buffer, cursor, length, NumberOutput.INT_MIN_BUFFER_SIZE);
+
+        int length = tokenLength(false);
         int i = NumberInput.parseInt(buffer, cursor, length);
         cursor += length;
         return i;
@@ -75,8 +74,7 @@ public abstract class AbstractStringSerializerReader implements SerializerReader
 
     @Override
     public long readLong() throws SerializerException {
-        int length = require(NumberOutput.LONG_MIN_BUFFER_SIZE);
-        length = tokenLength(buffer, cursor, length, NumberOutput.LONG_MIN_BUFFER_SIZE);
+        int length = tokenLength(false);
         long l = NumberInput.parseLong(buffer, cursor, length);
         cursor += length;
         return l;
@@ -84,8 +82,7 @@ public abstract class AbstractStringSerializerReader implements SerializerReader
 
     @Override
     public short readShort() throws SerializerException {
-        int length = require(NumberOutput.SHORT_MIN_BUFFER_SIZE);
-        length = tokenLength(buffer, cursor, length, NumberOutput.SHORT_MIN_BUFFER_SIZE);
+        int length = tokenLength(false);
         short s = (short) NumberInput.parseInt(buffer, cursor, length);
         cursor += length;
         return s;
@@ -104,8 +101,7 @@ public abstract class AbstractStringSerializerReader implements SerializerReader
 
     @Override
     public boolean readBoolean() throws SerializerException {
-        int length = require(BooleanOutput.MAX_BUFFER_SIZE);
-        length = tokenLength(buffer, cursor, length, BooleanOutput.MAX_BUFFER_SIZE);
+        int length = tokenLength(false);
         boolean b = BooleanOutput.inputBoolean(buffer, cursor, length);
         cursor += length;
         return b;
@@ -113,32 +109,34 @@ public abstract class AbstractStringSerializerReader implements SerializerReader
 
     @Override
     public byte readByte() throws SerializerException {
-        require(ByteOutput.MIN_BUFFER_SIZE);
+        tokenLength(false);
         return ByteOutput.inputByte(buffer, cursor++);
     }
 
     @Override
     public char readChar() throws SerializerException {
-        require(1);
+        tokenLength(false);
         return buffer[cursor++];
     }
 
     @Override
     public String readString() throws SerializerException {
         StringBuilder sb = new StringBuilder();
-        int length = require(end - cursor);
-        while ((length = tokenLength(buffer, cursor, length, -1)) != -1) {
+        int length;
+        while ((length = tokenLength(true)) == -2) {
+            sb.append(buffer, cursor, end - cursor);
+            cursor = end;
+        }
+        if (length > 0) {
             sb.append(buffer, cursor, length);
             cursor += length;
-            length = require(buffer.length);
         }
         return sb.toString();
     }
 
     @Override
     public boolean readIsNull() throws SerializerException {
-        int length = require(1);
-        return tokenLength(buffer, cursor, length, 1) == 0;
+        return tokenLength(true) == 0;
     }
 
 }

@@ -4,153 +4,81 @@ import java.io.Reader;
 
 import fr.herman.wizz.exception.SerializerException;
 import fr.herman.wizz.string.AbstractStringSerializerReader;
-import fr.herman.wizz.string.BooleanOutput;
-import fr.herman.wizz.string.ByteOutput;
-import fr.herman.wizz.string.NumberInput;
 
 public class CsvReader extends AbstractStringSerializerReader {
 
     private final char separator;
 
-    private boolean skipLF = false;
+    private final char eol;
 
-    public CsvReader(Reader reader, char separator) {
+    private boolean shift = false;
+
+    public CsvReader(Reader reader, char separator, char eol) {
         super(reader);
         this.separator = separator;
+        this.eol = eol;
+    }
+
+    CsvReader(Reader reader, char separator, char eol, int bufferSize) {
+        super(reader);
+        this.separator = separator;
+        this.eol = eol;
     }
 
     @Override
-    protected int tokenLength(char[] buffer, int offset, int count, int required) throws SerializerException {
-        if (count < 0) {
+    protected int tokenLength(boolean appendable) throws SerializerException {
+        if (shift) {
+            // skip previous separator
+            cursor++;
+            shift = false;
+        }
+        int i = cursor;
+        int tokenLength = findLength(i);
+        if (tokenLength != -1) {
+            return tokenLength;
+        }
+        if (appendable && end - cursor > 0) {
+            // finish to read values in cache and fill it entirely
+            return -2;
+        }
+        int required = cursor + buffer.length - end;
+        if (required < 1) {
             throw new SerializerException("Buffer overflow");
         }
-        int capacity = offset + count;
-        int i = offset;
-        while (i < capacity) {
+        int length = require(required);
+        if (length == -1) {
+            return end - cursor;
+        }
+        tokenLength = findLength(i);
+        if (appendable && tokenLength == -1) {
+            return -2;
+        }
+        return tokenLength;
+    }
+
+    private int findLength(int i) {
+        while (i < end) {
             char c = buffer[i];
-            if (separator == c || '\n' == c || '\r' == c) {
-                if ('\n' == c) {
-                    skipLF = true;
-                } else if ('\r' == c && skipLF) {
-                    cursor++;
-                    offset++;
-                    skipLF = false;
-                }
-                return i - offset;
+            if (separator == c || eol == c) {
+                shift = true;
+                return i - cursor;
             }
             i++;
-        }
-        if (required > 0) {
-            throw new SerializerException("token too long");
         }
         return -1;
     }
 
-    @Override
-    protected int require(int size) throws SerializerException {
-        return super.require(size + (skipLF ? 2 : 1));
+    public boolean hasNext() throws SerializerException {
+        return tokenLength(false) > -1;
     }
 
-    protected boolean hasNext(int size) throws SerializerException {
-        return require(size) >= size;
-    }
-
-    public boolean hasNextInt() throws SerializerException {
-        return hasNext(NumberInput.MIN_BUFFER_SIZE);
-    }
-
-    public boolean hasNextLong() throws SerializerException {
-        return hasNext(NumberInput.MIN_BUFFER_SIZE);
-    }
-
-    public boolean hasNextShort() throws SerializerException {
-        return hasNext(NumberInput.MIN_BUFFER_SIZE);
-    }
-
-    public boolean hasNextDouble() throws SerializerException {
-        return hasNext(NumberInput.MIN_BUFFER_SIZE);
-    }
-
-    public boolean hasNextFloat() throws SerializerException {
-        return hasNext(NumberInput.MIN_BUFFER_SIZE);
-    }
-
-    public boolean hasNextBoolean() throws SerializerException {
-        return hasNext(BooleanOutput.MIN_BUFFER_SIZE);
-    }
-
-    public boolean hasNextByte() throws SerializerException {
-        return hasNext(ByteOutput.MIN_BUFFER_SIZE);
-    }
-
-    public boolean hasNextChar() throws SerializerException {
-        return hasNext(1);
-    }
-
-    public boolean hasNextString() throws SerializerException {
-        return hasNext(1);
-    }
-
-    @Override
-    public int readInt() throws SerializerException {
-        int i = super.readInt();
-        cursor++;
-        return i;
-    }
-
-    @Override
-    public long readLong() throws SerializerException {
-        long l = super.readLong();
-        cursor++;
-        return l;
-    }
-
-    @Override
-    public short readShort() throws SerializerException {
-        short s = super.readShort();
-        cursor++;
-        return s;
-    }
-
-    @Override
-    public double readDouble() throws SerializerException {
-        double d = super.readDouble();
-        cursor++;
-        return d;
-    }
-
-    @Override
-    public float readFloat() throws SerializerException {
-        float f = super.readFloat();
-        cursor++;
-        return f;
-    }
-
-    @Override
-    public boolean readBoolean() throws SerializerException {
-        boolean b = super.readBoolean();
-        cursor++;
-        return b;
-    }
-
-    @Override
-    public byte readByte() throws SerializerException {
-        byte b = super.readByte();
-        cursor++;
-        return b;
-    }
-
-    @Override
-    public char readChar() throws SerializerException {
-        char c = super.readChar();
-        cursor++;
-        return c;
-    }
-
-    @Override
-    public String readString() throws SerializerException {
-        String s = super.readString();
-        cursor++;
-        return s;
+    public void skipToken() throws SerializerException {
+        int length;
+        while ((length = tokenLength(true)) == -2) {
+            cursor = end;
+        }
+        if (length > 0) {
+            cursor += length;
+        }
     }
 }

@@ -15,7 +15,7 @@ public class CsvWriter extends AbstractStringSerializerWriter {
         this.eol = eol;
     }
 
-    public CsvWriter(Writer writer, char separator, char eol, int bufferSize) {
+    CsvWriter(Writer writer, char separator, char eol, int bufferSize) {
         super(writer, bufferSize);
         this.separator = separator;
         this.eol = eol;
