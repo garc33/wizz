@@ -1,4 +1,4 @@
-package fr.herman.wizz.io.strings;
+package fr.herman.wizz.string;
 
 public class NumberOutput {
     private static final char NULL_CHAR = (char) 0;

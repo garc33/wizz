@@ -1,5 +1,6 @@
-package fr.herman.wizz.io.strings
+package fr.herman.wizz.string
 
+import fr.herman.wizz.string.BooleanOutput;
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -8,7 +9,7 @@ class BooleanSpec extends Specification{
     @Unroll
     def "readwrite boolean #b"(){
         given:
-        char[] buffer = new char[BooleanOutput.MIN_BUFFER_SIZE]
+        char[] buffer = new char[BooleanOutput.MAX_BUFFER_SIZE]
         expect:
         def length = BooleanOutput.outputBoolean(b, buffer, 0)
         BooleanOutput.inputBoolean(buffer, 0, length) == b

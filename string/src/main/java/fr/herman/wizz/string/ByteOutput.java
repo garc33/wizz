@@ -1,4 +1,4 @@
-package fr.herman.wizz.io.strings;
+package fr.herman.wizz.string;
 
 public class ByteOutput {
     public static final int MIN_BUFFER_SIZE = 1;

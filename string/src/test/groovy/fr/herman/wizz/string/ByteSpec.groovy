@@ -1,5 +1,6 @@
-package fr.herman.wizz.io.strings
+package fr.herman.wizz.string
 
+import fr.herman.wizz.string.ByteOutput;
 import spock.lang.Specification
 
 class ByteSpec extends Specification {

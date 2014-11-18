@@ -1,9 +1,11 @@
-package fr.herman.wizz.io.strings;
+package fr.herman.wizz.string;
 
 import fr.herman.wizz.exception.SerializerException;
 
 public class BooleanOutput {
-    public static final int MIN_BUFFER_SIZE = 5;
+    public static final int MAX_BUFFER_SIZE = 5;
+
+    public static final int MIN_BUFFER_SIZE = 4;
 
     public static int outputBoolean(boolean b, char[] buffer, int offset) {
         if (b) {

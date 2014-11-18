@@ -1,5 +1,7 @@
-package fr.herman.wizz.io.strings
+package fr.herman.wizz.string
 
+import fr.herman.wizz.string.NumberInput;
+import fr.herman.wizz.string.NumberOutput;
 import spock.lang.Specification
 import spock.lang.Unroll
 

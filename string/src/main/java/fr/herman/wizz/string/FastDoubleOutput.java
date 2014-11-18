@@ -1,6 +1,6 @@
-package fr.herman.wizz.io.strings;
+package fr.herman.wizz.string;
 
-import static fr.herman.wizz.io.strings.NumberOutput.outputLong;
+import static fr.herman.wizz.string.NumberOutput.outputLong;
 import static java.lang.Double.isNaN;
 import static java.lang.Math.min;
 

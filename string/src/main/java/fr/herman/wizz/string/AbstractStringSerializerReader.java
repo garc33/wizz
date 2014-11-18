@@ -1,4 +1,4 @@
-package fr.herman.wizz.io.strings;
+package fr.herman.wizz.string;
 
 import static java.lang.String.format;
 
@@ -10,6 +10,8 @@ import fr.herman.wizz.io.SerializerReader;
 
 public abstract class AbstractStringSerializerReader implements SerializerReader {
 
+    private static final int DEFAULT_BUFFER_SIZE = 8192;
+
     protected final Reader reader;
 
     protected char[] buffer;
@@ -19,15 +21,19 @@ public abstract class AbstractStringSerializerReader implements SerializerReader
     protected int end = 0;
 
     public AbstractStringSerializerReader(Reader reader) {
+        this(reader, DEFAULT_BUFFER_SIZE);
+    }
+    public AbstractStringSerializerReader(Reader reader, int bufferSize) {
         this.reader = reader;
+        this.buffer = new char[bufferSize];
     }
 
     protected int require(int size) throws SerializerException {
-        if (size < end - cursor) {
+        if (size <= end - cursor) {
             return end - cursor;
         }
         if (size > buffer.length) {
-            throw new SerializerException(format("size %s is bigger than buffer size %s", size, buffer.length));
+            throw new SerializerException(format("Buffer overflow : size %s is bigger than buffer size %s", size, buffer.length));
         }
         if (size > buffer.length - cursor) {
             // move remaining chars to the beginning of the buffer
@@ -40,7 +46,7 @@ public abstract class AbstractStringSerializerReader implements SerializerReader
         if (size > end - cursor) {
             int length = fill(buffer, end, buffer.length - end);
             if (length == -1) {
-                throw new SerializerException("Buffer overflow");
+                return -1;
             }
             end = end + length;
         }
@@ -59,23 +65,30 @@ public abstract class AbstractStringSerializerReader implements SerializerReader
 
     @Override
     public int readInt() throws SerializerException {
+        System.out.println(cursor);
         int length = require(NumberOutput.INT_MIN_BUFFER_SIZE);
         length = tokenLength(buffer, cursor, length, NumberOutput.INT_MIN_BUFFER_SIZE);
-        return NumberInput.parseInt(buffer, cursor, length);
+        int i = NumberInput.parseInt(buffer, cursor, length);
+        cursor += length;
+        return i;
     }
 
     @Override
     public long readLong() throws SerializerException {
         int length = require(NumberOutput.LONG_MIN_BUFFER_SIZE);
         length = tokenLength(buffer, cursor, length, NumberOutput.LONG_MIN_BUFFER_SIZE);
-        return NumberInput.parseLong(buffer, cursor, length);
+        long l = NumberInput.parseLong(buffer, cursor, length);
+        cursor += length;
+        return l;
     }
 
     @Override
     public short readShort() throws SerializerException {
         int length = require(NumberOutput.SHORT_MIN_BUFFER_SIZE);
         length = tokenLength(buffer, cursor, length, NumberOutput.SHORT_MIN_BUFFER_SIZE);
-        return (short) NumberInput.parseInt(buffer, cursor, length);
+        short s = (short) NumberInput.parseInt(buffer, cursor, length);
+        cursor += length;
+        return s;
     }
 
     @Override
@@ -91,9 +104,11 @@ public abstract class AbstractStringSerializerReader implements SerializerReader
 
     @Override
     public boolean readBoolean() throws SerializerException {
-        int length = require(BooleanOutput.MIN_BUFFER_SIZE);
-        length = tokenLength(buffer, cursor, length, BooleanOutput.MIN_BUFFER_SIZE);
-        return BooleanOutput.inputBoolean(buffer, cursor, length);
+        int length = require(BooleanOutput.MAX_BUFFER_SIZE);
+        length = tokenLength(buffer, cursor, length, BooleanOutput.MAX_BUFFER_SIZE);
+        boolean b = BooleanOutput.inputBoolean(buffer, cursor, length);
+        cursor += length;
+        return b;
     }
 
     @Override

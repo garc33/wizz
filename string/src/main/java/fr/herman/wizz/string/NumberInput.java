@@ -1,15 +1,13 @@
-package fr.herman.wizz.io.strings;
+package fr.herman.wizz.string;
 
 public final class NumberInput {
 
     /**
      * Constants needed for parsing longs from basic int parsing methods
      */
-    final static long L_BILLION = 1_000_000_000;
+    private static final long L_BILLION = 1_000_000_000;
 
-    final static String MIN_LONG_STR_NO_SIGN = String.valueOf(Long.MIN_VALUE).substring(1);
-
-    final static String MAX_LONG_STR = String.valueOf(Long.MAX_VALUE);
+    public static final int MIN_BUFFER_SIZE = 1;
 
     /**
      * Fast method for parsing integers that are known to fit into regular

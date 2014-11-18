@@ -1,9 +1,9 @@
-package fr.herman.wizz.io.strings;
+package fr.herman.wizz.string;
 
-import static fr.herman.wizz.io.strings.BooleanOutput.outputBoolean;
-import static fr.herman.wizz.io.strings.ByteOutput.outputByte;
-import static fr.herman.wizz.io.strings.NumberOutput.outputInt;
-import static fr.herman.wizz.io.strings.NumberOutput.outputLong;
+import static fr.herman.wizz.string.BooleanOutput.outputBoolean;
+import static fr.herman.wizz.string.ByteOutput.outputByte;
+import static fr.herman.wizz.string.NumberOutput.outputInt;
+import static fr.herman.wizz.string.NumberOutput.outputLong;
 import static java.lang.Math.min;
 
 import java.io.IOException;
@@ -14,6 +14,8 @@ import fr.herman.wizz.io.SerializerWriter;
 
 public abstract class AbstractStringSerializerWriter implements SerializerWriter {
 
+    private static final int DEFAULT_BUFFER_SIZE = 8192;
+
     protected final Writer writer;
 
     protected char[] buffer;
@@ -21,7 +23,11 @@ public abstract class AbstractStringSerializerWriter implements SerializerWriter
     protected int cursor;
 
     public AbstractStringSerializerWriter(Writer writer) {
+        this(writer, DEFAULT_BUFFER_SIZE);
+    }
+    public AbstractStringSerializerWriter(Writer writer, int bufferSize) {
         this.writer = writer;
+        this.buffer = new char[bufferSize];
     }
 
     protected void require(int size) throws SerializerException {
@@ -71,7 +77,7 @@ public abstract class AbstractStringSerializerWriter implements SerializerWriter
 
     @Override
     public void writeBoolean(boolean input) throws SerializerException {
-        require(BooleanOutput.MIN_BUFFER_SIZE);
+        require(BooleanOutput.MAX_BUFFER_SIZE);
         cursor = outputBoolean(input, buffer, cursor);
     }
 
@@ -101,4 +107,5 @@ public abstract class AbstractStringSerializerWriter implements SerializerWriter
             }
         }
     }
+
 }
