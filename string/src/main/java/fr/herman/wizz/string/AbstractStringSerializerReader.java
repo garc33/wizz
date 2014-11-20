@@ -18,7 +18,7 @@ public abstract class AbstractStringSerializerReader implements SerializerReader
 
     protected int cursor = 0;
 
-    protected int end = 0;
+    protected int nextchar = 0;
 
     public AbstractStringSerializerReader(Reader reader) {
         this(reader, DEFAULT_BUFFER_SIZE);
@@ -29,33 +29,35 @@ public abstract class AbstractStringSerializerReader implements SerializerReader
     }
 
     protected int require(int size) throws SerializerException {
-        if (size <= end - cursor) {
-            return end - cursor;
+        if (size <= nextchar - cursor) {
+            return nextchar - cursor;
         }
         if (size > buffer.length) {
             throw new SerializerException(format("Buffer overflow : size %s is bigger than buffer size %s", size, buffer.length));
         }
         if (size > buffer.length - cursor) {
             // move remaining chars to the beginning of the buffer
-            for (int i = 0; i < end - cursor; i++) {
-                buffer[i] = buffer[cursor + i];
-            }
-            end -= cursor;
+            System.arraycopy(buffer, cursor, buffer, 0, nextchar - cursor);
+            nextchar -= cursor;
             cursor = 0;
         }
-        if (size > end - cursor) {
-            int length = fill(buffer, end, buffer.length - end);
+        if (size > nextchar - cursor) {
+            int length = fill(buffer, nextchar, buffer.length - nextchar);
             if (length == -1) {
                 return -1;
             }
-            end = end + length;
+            nextchar += length;
         }
-        return end - cursor;
+        return nextchar - cursor;
     }
 
     protected int fill(char[] buffer, int offset, int count) throws SerializerException {
         try {
-            return reader.read(buffer, offset, count);
+            int length;
+            do {
+                length = reader.read(buffer, offset, count);
+            } while (length == 0);
+            return length;
         } catch (IOException e) {
             throw new SerializerException(e.getLocalizedMessage(), e);
         }
@@ -67,6 +69,9 @@ public abstract class AbstractStringSerializerReader implements SerializerReader
     public int readInt() throws SerializerException {
 
         int length = tokenLength(false);
+        if (length < 1) {
+            throw new SerializerException("length should be > 0");
+        }
         int i = NumberInput.parseInt(buffer, cursor, length);
         cursor += length;
         return i;
@@ -75,6 +80,9 @@ public abstract class AbstractStringSerializerReader implements SerializerReader
     @Override
     public long readLong() throws SerializerException {
         int length = tokenLength(false);
+        if (length < 1) {
+            throw new SerializerException("length should be > 0");
+        }
         long l = NumberInput.parseLong(buffer, cursor, length);
         cursor += length;
         return l;
@@ -83,6 +91,9 @@ public abstract class AbstractStringSerializerReader implements SerializerReader
     @Override
     public short readShort() throws SerializerException {
         int length = tokenLength(false);
+        if (length < 1) {
+            throw new SerializerException("length should be > 0");
+        }
         short s = (short) NumberInput.parseInt(buffer, cursor, length);
         cursor += length;
         return s;
@@ -102,6 +113,9 @@ public abstract class AbstractStringSerializerReader implements SerializerReader
     @Override
     public boolean readBoolean() throws SerializerException {
         int length = tokenLength(false);
+        if (length < 1) {
+            throw new SerializerException("length should be > 0");
+        }
         boolean b = BooleanOutput.inputBoolean(buffer, cursor, length);
         cursor += length;
         return b;
@@ -109,13 +123,19 @@ public abstract class AbstractStringSerializerReader implements SerializerReader
 
     @Override
     public byte readByte() throws SerializerException {
-        tokenLength(false);
+        int length = tokenLength(false);
+        if (length < 1) {
+            throw new SerializerException("length should be > 0");
+        }
         return ByteOutput.inputByte(buffer, cursor++);
     }
 
     @Override
     public char readChar() throws SerializerException {
-        tokenLength(false);
+        int length = tokenLength(false);
+        if (length < 1) {
+            throw new SerializerException("length should be > 0");
+        }
         return buffer[cursor++];
     }
 
@@ -124,8 +144,8 @@ public abstract class AbstractStringSerializerReader implements SerializerReader
         StringBuilder sb = new StringBuilder();
         int length;
         while ((length = tokenLength(true)) == -2) {
-            sb.append(buffer, cursor, end - cursor);
-            cursor = end;
+            sb.append(buffer, cursor, nextchar - cursor - 1);
+            cursor = nextchar;
         }
         if (length > 0) {
             sb.append(buffer, cursor, length);
