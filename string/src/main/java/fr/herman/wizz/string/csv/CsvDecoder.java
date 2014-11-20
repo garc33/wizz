@@ -3,9 +3,9 @@ package fr.herman.wizz.string.csv;
 import java.io.Reader;
 
 import fr.herman.wizz.exception.SerializerException;
-import fr.herman.wizz.string.AbstractStringSerializerReader;
+import fr.herman.wizz.string.StringDecoder;
 
-public class CsvReader extends AbstractStringSerializerReader {
+public class CsvDecoder extends StringDecoder {
 
     private final char separator;
 
@@ -15,13 +15,13 @@ public class CsvReader extends AbstractStringSerializerReader {
 
     private int previousLength;
 
-    public CsvReader(Reader reader, char separator, char eol) {
+    public CsvDecoder(Reader reader, char separator, char eol) {
         super(reader);
         this.separator = separator;
         this.eol = eol;
     }
 
-    CsvReader(Reader reader, char separator, char eol, int bufferSize) {
+    CsvDecoder(Reader reader, char separator, char eol, int bufferSize) {
         super(reader, bufferSize);
         this.separator = separator;
         this.eol = eol;

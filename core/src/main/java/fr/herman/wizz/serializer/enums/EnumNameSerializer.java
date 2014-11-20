@@ -5,8 +5,8 @@ import java.util.List;
 import fr.herman.wizz.Serializer;
 import fr.herman.wizz.WithFormat;
 import fr.herman.wizz.exception.SerializerException;
-import fr.herman.wizz.io.SerializerReader;
-import fr.herman.wizz.io.SerializerWriter;
+import fr.herman.wizz.io.Decoder;
+import fr.herman.wizz.io.Encoder;
 import fr.herman.wizz.utils.Strings;
 
 public class EnumNameSerializer<E extends Enum<E>> implements Serializer<E>, WithFormat
@@ -31,7 +31,7 @@ public class EnumNameSerializer<E extends Enum<E>> implements Serializer<E>, Wit
     }
 
     @Override
-    public E deserialize(SerializerReader reader) throws SerializerException {
+    public E deserialize(Decoder reader) throws SerializerException {
         String s = reader.readString();
         try {
             return Enum.valueOf(clazz, s);
@@ -41,7 +41,7 @@ public class EnumNameSerializer<E extends Enum<E>> implements Serializer<E>, Wit
     }
 
     @Override
-    public void serialize(SerializerWriter writer, E object) throws SerializerException {
+    public void serialize(Encoder writer, E object) throws SerializerException {
         writer.writeString(object.name());
     }
 

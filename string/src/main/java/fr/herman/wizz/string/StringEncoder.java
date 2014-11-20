@@ -10,9 +10,9 @@ import java.io.IOException;
 import java.io.Writer;
 
 import fr.herman.wizz.exception.SerializerException;
-import fr.herman.wizz.io.SerializerWriter;
+import fr.herman.wizz.io.Encoder;
 
-public abstract class AbstractStringSerializerWriter implements SerializerWriter {
+public abstract class StringEncoder implements Encoder {
 
     private static final int DEFAULT_BUFFER_SIZE = 8192;
 
@@ -22,10 +22,10 @@ public abstract class AbstractStringSerializerWriter implements SerializerWriter
 
     protected int cursor;
 
-    public AbstractStringSerializerWriter(Writer writer) {
+    public StringEncoder(Writer writer) {
         this(writer, DEFAULT_BUFFER_SIZE);
     }
-    public AbstractStringSerializerWriter(Writer writer, int bufferSize) {
+    public StringEncoder(Writer writer, int bufferSize) {
         this.writer = writer;
         this.buffer = new char[bufferSize];
     }

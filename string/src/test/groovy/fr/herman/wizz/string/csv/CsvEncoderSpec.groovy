@@ -2,9 +2,9 @@ package fr.herman.wizz.string.csv
 
 import spock.lang.Specification
 
-class CsvWriterSpec extends Specification{
+class CsvEncoderSpec extends Specification{
     StringWriter sw = new StringWriter()
-    CsvWriter writer = new CsvWriter(sw, ',' as char, '\n' as char)
+    CsvEncoder writer = new CsvEncoder(sw, ',' as char, '\n' as char)
 
     def "write separator"(){
         when:
@@ -115,7 +115,7 @@ class CsvWriterSpec extends Specification{
     def "write string > to buffer size"(){
         given:
         Writer w = Mock(Writer)
-        CsvWriter cw = new CsvWriter(w, ',' as char, '\n' as char,3)
+        CsvEncoder cw = new CsvEncoder(w, ',' as char, '\n' as char,3)
         when:
         cw.writeString('Hello')
         cw.flush()
@@ -128,7 +128,7 @@ class CsvWriterSpec extends Specification{
     def "auto flush when hit buffer size"(){
         given:
         Writer w = Mock(Writer)
-        CsvWriter cw = new CsvWriter(w, ',' as char, '\n' as char,5)
+        CsvEncoder cw = new CsvEncoder(w, ',' as char, '\n' as char,5)
         when:
         cw.writeChar('B' as char)
         cw.writeBoolean(true)

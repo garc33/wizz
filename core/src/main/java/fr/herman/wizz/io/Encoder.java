@@ -2,7 +2,7 @@ package fr.herman.wizz.io;
 
 import fr.herman.wizz.exception.SerializerException;
 
-public interface SerializerWriter {
+public interface Encoder {
     void writeInt(int input) throws SerializerException;
 
     void writeLong(long input) throws SerializerException;

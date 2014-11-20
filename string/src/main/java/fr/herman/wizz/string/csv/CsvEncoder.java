@@ -3,19 +3,19 @@ package fr.herman.wizz.string.csv;
 import java.io.Writer;
 
 import fr.herman.wizz.exception.SerializerException;
-import fr.herman.wizz.string.AbstractStringSerializerWriter;
+import fr.herman.wizz.string.StringEncoder;
 
-public class CsvWriter extends AbstractStringSerializerWriter {
+public class CsvEncoder extends StringEncoder {
 
     private final char separator, eol;
 
-    public CsvWriter(Writer writer, char separator, char eol) {
+    public CsvEncoder(Writer writer, char separator, char eol) {
         super(writer);
         this.separator = separator;
         this.eol = eol;
     }
 
-    CsvWriter(Writer writer, char separator, char eol, int bufferSize) {
+    CsvEncoder(Writer writer, char separator, char eol, int bufferSize) {
         super(writer, bufferSize);
         this.separator = separator;
         this.eol = eol;

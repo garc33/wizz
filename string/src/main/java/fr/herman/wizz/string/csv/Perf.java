@@ -17,7 +17,7 @@ public class Perf {
 
     public static void read(String fileName) throws FileNotFoundException, SerializerException, IOException {
         FileReader fr = new FileReader(fileName);
-        CsvReader reader = new CsvReader(fr, ',', '\n');
+        CsvDecoder reader = new CsvDecoder(fr, ',', '\n');
         long time = System.currentTimeMillis();
         int i = 0;
         while (reader.hasNext()) {
@@ -31,7 +31,7 @@ public class Perf {
 
     public static void write(String fileName) throws IOException, SerializerException {
         FileWriter fw = new FileWriter(fileName);
-        CsvWriter writer = new CsvWriter(fw, ',', '\n');
+        CsvEncoder writer = new CsvEncoder(fw, ',', '\n');
         long time = System.currentTimeMillis();
         int NB = 10000000;
         int k = 0;

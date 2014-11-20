@@ -2,8 +2,8 @@ package fr.herman.wizz.serializer;
 
 import fr.herman.wizz.Serializer;
 import fr.herman.wizz.exception.SerializerException;
-import fr.herman.wizz.io.SerializerReader;
-import fr.herman.wizz.io.SerializerWriter;
+import fr.herman.wizz.io.Decoder;
+import fr.herman.wizz.io.Encoder;
 
 public class DelegateSerializer<T> implements Serializer<T> {
 
@@ -14,12 +14,12 @@ public class DelegateSerializer<T> implements Serializer<T> {
     }
 
     @Override
-    public T deserialize(SerializerReader reader) throws SerializerException {
+    public T deserialize(Decoder reader) throws SerializerException {
         return delegate.deserialize(reader);
     }
 
     @Override
-    public void serialize(SerializerWriter writer, T object) throws SerializerException {
+    public void serialize(Encoder writer, T object) throws SerializerException {
         delegate.serialize(writer, object);
     }
 

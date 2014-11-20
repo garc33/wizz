@@ -1,12 +1,12 @@
 package fr.herman.wizz.serializer.dates
 
 import spock.lang.Specification
-import fr.herman.wizz.io.SerializerReader
-import fr.herman.wizz.io.SerializerWriter
+import fr.herman.wizz.io.Decoder
+import fr.herman.wizz.io.Encoder
 
 class TimeStampSerializerSpec extends Specification {
-    SerializerReader reader = Mock(SerializerReader)
-    SerializerWriter writer = Mock(SerializerWriter)
+    Decoder reader = Mock(Decoder)
+    Encoder writer = Mock(Encoder)
     TimeStampSerializer serializer = new TimeStampSerializer()
 
     def "write a timestamp"(){

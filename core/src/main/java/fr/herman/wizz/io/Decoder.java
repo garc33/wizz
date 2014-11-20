@@ -2,7 +2,7 @@ package fr.herman.wizz.io;
 
 import fr.herman.wizz.exception.SerializerException;
 
-public interface SerializerReader {
+public interface Decoder {
     int readInt() throws SerializerException;
 
     long readLong() throws SerializerException;

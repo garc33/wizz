@@ -3,8 +3,8 @@ package fr.herman.wizz.serializer.numbers;
 import java.math.BigDecimal;
 import fr.herman.wizz.Serializer;
 import fr.herman.wizz.exception.SerializerException;
-import fr.herman.wizz.io.SerializerReader;
-import fr.herman.wizz.io.SerializerWriter;
+import fr.herman.wizz.io.Decoder;
+import fr.herman.wizz.io.Encoder;
 
 public class BigDecimalDoubleSerializer implements Serializer<BigDecimal> {
 
@@ -14,7 +14,7 @@ public class BigDecimalDoubleSerializer implements Serializer<BigDecimal> {
     }
 
     @Override
-    public BigDecimal deserialize(SerializerReader reader) throws SerializerException {
+    public BigDecimal deserialize(Decoder reader) throws SerializerException {
         double d = reader.readDouble();
         try {
             return BigDecimal.valueOf(d);
@@ -24,7 +24,7 @@ public class BigDecimalDoubleSerializer implements Serializer<BigDecimal> {
     }
 
     @Override
-    public void serialize(SerializerWriter writer, BigDecimal object) throws SerializerException {
+    public void serialize(Encoder writer, BigDecimal object) throws SerializerException {
         writer.writeDouble(object.doubleValue());
     }
 

@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.io.Reader;
 
 import fr.herman.wizz.exception.SerializerException;
-import fr.herman.wizz.io.SerializerReader;
+import fr.herman.wizz.io.Decoder;
 
-public abstract class AbstractStringSerializerReader implements SerializerReader {
+public abstract class StringDecoder implements Decoder {
 
     private static final int DEFAULT_BUFFER_SIZE = 8192;
 
@@ -20,10 +20,10 @@ public abstract class AbstractStringSerializerReader implements SerializerReader
 
     protected int nextchar = 0;
 
-    public AbstractStringSerializerReader(Reader reader) {
+    public StringDecoder(Reader reader) {
         this(reader, DEFAULT_BUFFER_SIZE);
     }
-    public AbstractStringSerializerReader(Reader reader, int bufferSize) {
+    public StringDecoder(Reader reader, int bufferSize) {
         this.reader = reader;
         this.buffer = new char[bufferSize];
     }

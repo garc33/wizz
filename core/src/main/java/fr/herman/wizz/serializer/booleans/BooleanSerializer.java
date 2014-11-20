@@ -2,8 +2,8 @@ package fr.herman.wizz.serializer.booleans;
 
 import fr.herman.wizz.Serializer;
 import fr.herman.wizz.exception.SerializerException;
-import fr.herman.wizz.io.SerializerReader;
-import fr.herman.wizz.io.SerializerWriter;
+import fr.herman.wizz.io.Decoder;
+import fr.herman.wizz.io.Encoder;
 
 public class BooleanSerializer implements Serializer<Boolean> {
 
@@ -11,12 +11,12 @@ public class BooleanSerializer implements Serializer<Boolean> {
     }
 
     @Override
-    public Boolean deserialize(SerializerReader reader) throws SerializerException {
+    public Boolean deserialize(Decoder reader) throws SerializerException {
         return Boolean.valueOf(reader.readBoolean());
     }
 
     @Override
-    public void serialize(SerializerWriter writer, Boolean object) throws SerializerException {
+    public void serialize(Encoder writer, Boolean object) throws SerializerException {
         writer.writeBoolean(object.booleanValue());
     }
 

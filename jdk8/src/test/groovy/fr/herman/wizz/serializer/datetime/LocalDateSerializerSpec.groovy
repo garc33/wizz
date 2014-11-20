@@ -5,13 +5,13 @@ import java.time.LocalDate
 import spock.lang.Specification
 import spock.lang.Unroll
 import fr.herman.wizz.exception.SerializerException
-import fr.herman.wizz.io.SerializerReader
-import fr.herman.wizz.io.SerializerWriter
+import fr.herman.wizz.io.Decoder
+import fr.herman.wizz.io.Encoder
 
 class LocalDateSerializerSpec extends Specification{
 
-    SerializerReader reader = Mock(SerializerReader)
-    SerializerWriter writer = Mock(SerializerWriter)
+    Decoder reader = Mock(Decoder)
+    Encoder writer = Mock(Encoder)
 
     @Unroll
     def "convert Object #input with format #format to String #output"(){

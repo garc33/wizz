@@ -6,8 +6,8 @@ import java.util.Date;
 import fr.herman.wizz.Serializer;
 import fr.herman.wizz.WithFormat;
 import fr.herman.wizz.exception.SerializerException;
-import fr.herman.wizz.io.SerializerReader;
-import fr.herman.wizz.io.SerializerWriter;
+import fr.herman.wizz.io.Decoder;
+import fr.herman.wizz.io.Encoder;
 
 public class DateFormatSerializer implements Serializer<Date>, WithFormat
 {
@@ -19,7 +19,7 @@ public class DateFormatSerializer implements Serializer<Date>, WithFormat
     }
 
     @Override
-    public Date deserialize(SerializerReader reader) throws SerializerException {
+    public Date deserialize(Decoder reader) throws SerializerException {
         String s = reader.readString();
         try {
             return new SimpleDateFormat(pattern).parse(s);
@@ -29,7 +29,7 @@ public class DateFormatSerializer implements Serializer<Date>, WithFormat
     }
 
     @Override
-    public void serialize(SerializerWriter writer, Date object) throws SerializerException {
+    public void serialize(Encoder writer, Date object) throws SerializerException {
         try {
             String formatedDate = new SimpleDateFormat(pattern).format(object);
             writer.writeString(formatedDate);

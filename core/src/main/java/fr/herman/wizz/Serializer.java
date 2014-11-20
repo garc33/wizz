@@ -1,13 +1,13 @@
 package fr.herman.wizz;
 
 import fr.herman.wizz.exception.SerializerException;
-import fr.herman.wizz.io.SerializerReader;
-import fr.herman.wizz.io.SerializerWriter;
+import fr.herman.wizz.io.Decoder;
+import fr.herman.wizz.io.Encoder;
 
 public interface Serializer<TYPE> {
-    TYPE deserialize(SerializerReader reader) throws SerializerException;
+    TYPE deserialize(Decoder reader) throws SerializerException;
 
-    void serialize(SerializerWriter writer, TYPE object) throws SerializerException;
+    void serialize(Encoder writer, TYPE object) throws SerializerException;
 
     Class<TYPE> handleClass();
 }
