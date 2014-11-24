@@ -59,7 +59,7 @@ public abstract class StringDecoder implements Decoder {
             } while (length == 0);
             return length;
         } catch (IOException e) {
-            throw new SerializerException(e.getLocalizedMessage(), e);
+            throw new SerializerException(e);
         }
     }
 

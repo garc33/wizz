@@ -30,7 +30,7 @@ public abstract class TemporalAccessorSerializer<T extends TemporalAccessor> imp
         try {
             return formatter.parse(reader.readString(), query);
         } catch (DateTimeParseException e) {
-            throw new SerializerException(e.getLocalizedMessage(), e);
+            throw new SerializerException(e);
         }
     }
 
@@ -39,7 +39,7 @@ public abstract class TemporalAccessorSerializer<T extends TemporalAccessor> imp
         try {
             writer.writeString(formatter.format(object));
         } catch (DateTimeException e) {
-            throw new SerializerException(e.getLocalizedMessage(), e);
+            throw new SerializerException(e);
         }
     }
 

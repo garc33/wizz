@@ -42,7 +42,7 @@ public abstract class StringEncoder implements Encoder {
             writer.flush();
             cursor = 0;
         } catch (IOException e) {
-            throw new SerializerException(e.getLocalizedMessage(), e);
+            throw new SerializerException(e);
         }
     }
 

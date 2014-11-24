@@ -15,4 +15,8 @@ public class SerializerException extends Exception
         super(message);
     }
 
+    public SerializerException(Exception cause) {
+        super(cause);
+    }
+
 }
