@@ -1,6 +1,9 @@
 package fr.herman.wizz.io;
 
+import java.util.List;
+
 import fr.herman.wizz.exception.SerializerException;
+import fr.herman.wizz.mapping.OutputMapping;
 
 public interface Encoder {
     void writeInt(int input) throws SerializerException;
@@ -24,4 +27,6 @@ public interface Encoder {
     void writeNull() throws SerializerException;
 
     void writeNotNull() throws SerializerException;
+
+    <O> void writeObject(List<OutputMapping<O>> mappings, O object) throws SerializerException;
 }

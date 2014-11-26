@@ -1,6 +1,8 @@
 rootProject.name = 'wizz'
-include 'wizz-core', 'wizz-jdk8', 'wizz-string', 'wizz-byte'
+include 'wizz-core', 'wizz-jdk8', 'wizz-string', 'wizz-byte', 'wizz-demo'
 project(':wizz-core').projectDir = file('core')
 project(':wizz-jdk8').projectDir = file('jdk8')
 project(':wizz-string').projectDir = file('string')
 project(':wizz-byte').projectDir = file('byte')
+
+project(':wizz-demo').projectDir = file('demo')

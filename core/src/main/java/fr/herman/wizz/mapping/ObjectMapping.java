@@ -16,10 +16,9 @@ public class ObjectMapping<O> {
         this.factory = factory;
     }
 
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public void write(Encoder encoder, O object) throws SerializerException {
-        for(Mapping<O, ?> mapping:mappings){
-            mapping.write(encoder, object);
-        }
+        encoder.writeObject((List) mappings, object);
     }
 
     public void read(Decoder decoder, O object) throws SerializerException {

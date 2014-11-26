@@ -1,0 +1,14 @@
+sourceCompatibility = 1.8
+eclipse{
+    jdt{
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+}
+
+dependencies {
+    compile project(':wizz-core')
+    compile project(':wizz-byte')
+    compile project(':wizz-string')
+    compile project(':wizz-jdk8')
+}
