@@ -1,13 +1,12 @@
 package fr.herman.wizz.bytes.serializer;
 
-import fr.herman.wizz.Serializer;
 import fr.herman.wizz.bytes.ByteEncoder;
 import fr.herman.wizz.bytes.charset.UTF8;
 import fr.herman.wizz.exception.SerializerException;
 import fr.herman.wizz.io.Decoder;
 import fr.herman.wizz.io.Encoder;
 
-public class StringUTF8Serializer implements Serializer<String> {
+public class StringUTF8Serializer implements ByteSerializer<String> {
 
     private static final UTF8 UTF8 = new UTF8();
 
