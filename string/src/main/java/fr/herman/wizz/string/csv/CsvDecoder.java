@@ -58,6 +58,9 @@ public class CsvDecoder extends StringDecoder {
             return nextchar - cursor;
         }
         tokenLength = findLength(cursor);
+        if (tokenLength == -1 && appendable) {
+            return -2;
+        }
         return tokenLength;
     }
 

@@ -144,7 +144,7 @@ public abstract class StringDecoder implements Decoder {
         StringBuilder sb = new StringBuilder();
         int length;
         while ((length = tokenLength(true)) == -2) {
-            sb.append(buffer, cursor, nextchar - cursor - 1);
+            sb.append(buffer, cursor, nextchar - cursor);
             cursor = nextchar;
         }
         if (length > 0) {
