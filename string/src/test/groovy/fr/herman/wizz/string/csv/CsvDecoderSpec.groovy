@@ -5,7 +5,7 @@ import spock.lang.Specification
 class CsvDecoderSpec extends Specification {
     def "read int"(){
         given:
-        def input = '123456,123,12\n34'
+        def input = '123456,123,12\n34\n'
         when:
         def reader = new CsvDecoder(new StringReader(input), ',' as char,'\n' as char,7)
         then:
@@ -17,7 +17,7 @@ class CsvDecoderSpec extends Specification {
 
     def "read string"(){
         given:
-        def input = 'salut,Hello World!!!,ola'
+        def input = 'salut,Hello World!!!,ola\n'
         when:
         def reader = new CsvDecoder(new StringReader(input), ',' as char,'\n' as char,7)
         then:
