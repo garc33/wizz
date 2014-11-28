@@ -14,13 +14,13 @@ public class FileChannelByteEncoder extends ByteBufferEncoder {
     public FileChannelByteEncoder(FileChannel channel, int bufferSize) {
         super();
         this.channel = channel;
-        buffer = ByteBuffer.allocate(bufferSize);
+        buffer = ByteBuffer.allocateDirect(bufferSize);
     }
 
     public FileChannelByteEncoder(FileChannel channel, int bufferSize, CustomCharset charset) {
         super(charset);
         this.channel = channel;
-        buffer = ByteBuffer.allocate(bufferSize);
+        buffer = ByteBuffer.allocateDirect(bufferSize);
     }
 
     @Override

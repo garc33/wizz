@@ -16,6 +16,8 @@ public abstract class ByteBufferEncoder implements ByteEncoder {
 
     protected ByteBuffer buffer;
 
+    private byte[] localBuffer = new byte[255];
+
     public ByteBufferEncoder() {
         this(new UTF8());
     }
@@ -118,9 +120,9 @@ public abstract class ByteBufferEncoder implements ByteEncoder {
         writeInt(charset.computeSize(input, 0, length));
         while (index < length) {
             int estimated = (length - index) * charset.maxBytesPerChar();
-            require(Math.min(buffer.capacity(), estimated));
-            int batch = Math.min(buffer.remaining(), estimated) / charset.maxBytesPerChar();
-            buffer.position(charset.encode(input, index, batch, buffer.array(), buffer.position()));
+            int batch = Math.min(localBuffer.length, estimated) / charset.maxBytesPerChar();
+            int bytes = charset.encode(input, index, batch, localBuffer, 0);
+            writeByteArray(localBuffer, 0, bytes);
             index += batch;
         }
     }

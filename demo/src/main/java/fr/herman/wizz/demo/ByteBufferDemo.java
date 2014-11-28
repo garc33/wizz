@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 import fr.herman.wizz.bytes.FileChannelByteEncoder;
-import fr.herman.wizz.bytes.serializer.StringUTF8Serializer;
+import fr.herman.wizz.bytes.serializer.StringASCIISerializer;
 import fr.herman.wizz.mapping.ObjectMapping;
 import fr.herman.wizz.mapping.ObjectMappingBuilder;
 import fr.herman.wizz.serializer.enums.EnumNameSerializer;
@@ -70,8 +70,8 @@ public class ByteBufferDemo
     public static void main(String... strings) throws Exception
     {
         ObjectMapping<Person> mapping = new ObjectMappingBuilder<>(Person::new)
-                .map(Person::setFirstName, Person::getFirstName, new StringUTF8Serializer())
-                .map(Person::setLastName, Person::getLastName, new StringUTF8Serializer())
+                .map(Person::setFirstName, Person::getFirstName, new StringASCIISerializer())
+                .map(Person::setLastName, Person::getLastName, new StringASCIISerializer())
             .map(Person::setAge, Person::getAge, new IntegerSerializer())
             .map(Person::setGender, Person::getGender, new EnumNameSerializer<>(Gender.class))
             .build();

@@ -1,5 +1,8 @@
 package fr.herman.wizz.bytes.charset;
 
+import java.io.IOException;
+import java.nio.ByteBuffer;
+
 public class UTF8 implements CustomCharset {
 
     @Override
@@ -40,6 +43,12 @@ public class UTF8 implements CustomCharset {
     @Override
     public int maxBytesPerChar() {
         return 3;
+    }
+
+
+    @Override
+    public int decode(ByteBuffer source, int length, Appendable dest) throws IOException {
+        return 0;
     }
 
 }
